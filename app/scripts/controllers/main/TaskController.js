@@ -12,6 +12,7 @@
             scope.isCollapsed = true;
             scope.approveData = {};
             scope.restrictDate = new Date();
+            scope.selectAllTasks = false;
 
             resourceFactory.checkerInboxResource.get({templateResource: 'searchtemplate'}, function (data) {
                 scope.checkerTemplate = data;
@@ -19,6 +20,14 @@
             resourceFactory.checkerInboxResource.search(function (data) {
                 scope.searchData = data;
             });
+
+            scope.checkAllData = function() {
+              scope.selectAllTasks = !scope.selectAllTasks;
+              for (var i = 0, len = scope.searchData.length; i < len; i++) {
+                scope.checkData[scope.searchData[i].id] = scope.selectAllTasks;
+              }
+            };
+
             scope.viewUser = function (item) {
                 scope.userTypeahead = true;
                 scope.formData.user = item.id;
